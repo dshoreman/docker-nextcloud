@@ -1,6 +1,6 @@
-FROM wonderfall/nginx-php:7.2
+FROM wonderfall/nginx-php:7.3
 
-ARG NEXTCLOUD_VERSION=16.0.6
+ARG NEXTCLOUD_VERSION=16.0.11
 ARG GPG_nextcloud="2880 6A87 8AE4 23A2 8372  792E D758 99B9 A724 937A"
 
 ENV UID=991 GID=991 \
@@ -8,7 +8,7 @@ ENV UID=991 GID=991 \
     APC_SHM_SIZE=128M \
     OPCACHE_MEM_SIZE=128 \
     MEMORY_LIMIT=512M \
-    CRON_PERIOD=15m \
+    CRON_PERIOD=5m \
     CRON_MEMORY_LIMIT=1g \
     TZ=Etc/UTC \
     DB_TYPE=sqlite3 \
@@ -25,17 +25,17 @@ RUN apk -U upgrade \
     pcre-dev \
     libtool \
     samba-dev \
- && apk add \
     imagemagick-dev \
+ && apk add \
     libressl \
     ca-certificates \
     libsmbclient \
     tzdata \
  && pecl install \
-    imagick \
     smbclient \
     apcu \
     redis \
+    imagick \
  && echo "extension=smbclient.so" > /php/conf.d/smbclient.ini \
  && echo "extension=redis.so" > /php/conf.d/redis.ini \
  && echo "extension=imagick.so" > /php/conf.d/imagick.ini \
